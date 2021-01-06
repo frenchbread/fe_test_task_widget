@@ -16,8 +16,6 @@ const Lib = function (config) {
   this.start = async () => {
     console.log('- widget attached')
 
-    console.log(this)
-
     await this.load_reactjs()
 
     console.log('- react & react dom loaded')
@@ -28,7 +26,7 @@ const Lib = function (config) {
     )
   }
 
-  this.load_reactjs = () => {
+  this.load_reactjs = async () => {
     const react_container = document.createElement('div')
     const placeholder_elem = document.querySelector(this.config.placeholder)
 
@@ -38,12 +36,15 @@ const Lib = function (config) {
     const react = 'https://unpkg.com/react@17/umd/react.development.js'
     const react_dom = 'https://unpkg.com/react-dom@17/umd/react-dom.development.js'
 
-    const loaders = [$.load_script(react), $.load_script(react_dom)]
+    await $.load_script(react)
+    await $.load_script(react_dom)
 
-    return Promise.all(loaders)
+    return
   }
 
   this.get_app_component = () => {
+    const instance = this
+
     return class App extends React.Component {
       constructor (props) {
         super(props)
@@ -52,8 +53,39 @@ const Lib = function (config) {
       render () {
         return React.createElement(
           'div',
-          {},
-          'placeholder'
+          {
+            style: {
+              marginTop: '1rem'
+            }
+          },
+          [
+            React.createElement(
+              instance.get_button_component(),
+              {
+                handleClick: () => {},
+                displayText: instance.config.placeholder_text
+              }
+            )
+          ]
+        )
+      }
+    }
+  }
+
+  this.get_button_component = () => {
+    return class Button extends React.Component {
+      constructor (props) {
+        super(props)
+      }
+
+      render () {
+        return React.createElement(
+          'button',
+          {
+            key: 'btn',
+            onClick: () => this.props.handleClick()
+          },
+          this.props.displayText
         )
       }
     }
