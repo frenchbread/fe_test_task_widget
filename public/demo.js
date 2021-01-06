@@ -48,6 +48,12 @@ const Lib = function (config) {
     return class App extends React.Component {
       constructor (props) {
         super(props)
+
+        this.state = { modalIsShowing: false }
+      }
+
+      toggleModal () {
+        this.setState({ modalIsShowing: !this.state.modalIsShowing })
       }
 
       render () {
@@ -62,8 +68,15 @@ const Lib = function (config) {
             React.createElement(
               instance.get_button_component(),
               {
-                handleClick: () => {},
+                handleClick: this.toggleModal.bind(this),
                 displayText: instance.config.placeholder_text
+              }
+            ),
+            React.createElement(
+              instance.get_modal_component(),
+              {
+                handleClick: this.toggleModal.bind(this),
+                modalIsShowing: this.state.modalIsShowing
               }
             )
           ]
@@ -87,6 +100,36 @@ const Lib = function (config) {
           },
           this.props.displayText
         )
+      }
+    }
+  }
+
+  this.get_modal_component = () => {
+    return class Modal extends React.Component {
+      render () {
+        if (this.props.modalIsShowing) {
+          return React.createElement(
+            'div',
+            {
+              style: {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.7)',
+                zIndex: 100,
+                color: 'white',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }
+            },
+            'modal'
+          )
+        } else {
+          return ''
+        }
       }
     }
   }
