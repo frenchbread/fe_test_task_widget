@@ -147,11 +147,31 @@ const Lib = function (config) {
       constructor (props) {
         super(props)
 
-        this.state = { contentIsLoaded: true, isInitialPage: true }
+        this.state = { chosenAttr: '', stage: 0 }
+      }
+
+      doSurprise () {
+        this.setState({ ...this.state, stage: 1 })
+
+        setTimeout(() => {
+          this.setState({ ...this.state, stage: 2, chosenAttr: instance.get_random_attribute() })
+
+          console.log(this.state)
+        }, 2500)
+      }
+
+      selectAttribute () {
+        document.querySelector(`input#${this.state.chosenAttr}`).checked = true
+        document.querySelector('.active').classList.remove('active')
+        document.querySelector(`.left-column img[data-image=${this.state.chosenAttr}]`).classList.add('active')
+
+        this.setState({ chosenAttr: '', stage: 0 })
+
+        this.props.toggleModal()
       }
 
       render () {
-        if (this.state.isInitialPage) {
+        if (this.state.stage === 0) {
           const active_img = document.querySelector('img.active')
 
           return React.createElement(
@@ -197,16 +217,128 @@ const Lib = function (config) {
                     instance.get_button_component(),
                     {
                       displayText: 'Surprise me!',
-                      handleClick: () => {}
+                      handleClick: () => this.doSurprise()
                     }
                   )
                 ]
               )
             ]
           )
+        } else if (this.state.stage === 1) {
+          return React.createElement(
+            'div',
+            {
+              style: {
+                padding: '1rem',
+                backgroundColor: '#fff',
+                color: '#777'
+              }
+            },
+            [
+              React.createElement(
+                'div',
+                {
+                  style: {
+                    height: '30rem',
+                    width: '30rem',
+                    backgroundImage: `url('http://localhost:3355/animation.gif')`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center'
+                  }
+                }
+              ),
+              React.createElement(
+                'div',
+                {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    paddingTop: '1rem',
+                    fontSize: '1.2rem'
+                  }
+                },
+                'hold on, surprising you can take a moment...'
+              )
+            ]
+          )
+        } else if (this.state.stage === 2) {
+          return React.createElement(
+            'div',
+            {
+              style: {
+                padding: '1rem',
+                backgroundColor: '#fff',
+                color: '#777'
+              }
+            },
+            [
+              React.createElement(
+                'div',
+                {
+                  style: {
+                    width: '10rem',
+                    textAlign: 'center'
+                  }
+                },
+                React.createElement(
+                  'div',
+                  {
+                    style: {
+                      display: 'inline-block',
+                      height: '5rem',
+                      width: '5rem',
+                      backgroundColor: this.state.chosenAttr,
+                      border: '3px solid #fff',
+                      borderRadius: '50%',
+                      boxShadow: '0 1px 3px 0 rgba(0,0,0,0.33)'
+                    }
+                  }
+                )
+              ),
+              React.createElement(
+                'div',
+                {
+                  style: {
+                    textAlign: 'center',
+                    fontSize: '1.2rem',
+                    color: '#777',
+                    paddingTop: '1rem'
+                  }
+                },
+                this.state.chosenAttr
+              ),
+              React.createElement(
+                'div',
+                {
+                  style: {
+                    textAlign: 'center',
+                    paddingTop: '1rem'
+                  }
+                },
+                React.createElement(
+                  'button',
+                  {
+                    onClick: () => this.selectAttribute()
+                  },
+                  'Select me!'
+                )
+              )
+            ]
+          )
         }
       }
     }
+  }
+
+  this.get_random_attribute = () => {
+    const attributes = this.config.attributes
+
+    const random_index = Math.round(Math.random() * attributes.length - 1)
+
+    console.log(random_index, attributes[random_index])
+
+    return attributes[random_index]
   }
 
 }
