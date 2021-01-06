@@ -75,7 +75,7 @@ const Lib = function (config) {
             React.createElement(
               instance.get_modal_component(),
               {
-                handleClick: this.toggleModal.bind(this),
+                toggleModal: this.toggleModal.bind(this),
                 modalIsShowing: this.state.modalIsShowing
               }
             )
@@ -95,7 +95,6 @@ const Lib = function (config) {
         return React.createElement(
           'button',
           {
-            key: 'btn',
             onClick: () => this.props.handleClick()
           },
           this.props.displayText
@@ -105,6 +104,8 @@ const Lib = function (config) {
   }
 
   this.get_modal_component = () => {
+    const instance = this
+
     return class Modal extends React.Component {
       render () {
         if (this.props.modalIsShowing) {
@@ -125,7 +126,12 @@ const Lib = function (config) {
                 justifyContent: 'center'
               }
             },
-            'modal'
+            React.createElement(
+              instance.get_modal_contents(),
+              {
+                toggleModal: this.props.toggleModal
+              }
+            )
           )
         } else {
           return ''
@@ -133,6 +139,76 @@ const Lib = function (config) {
       }
     }
   }
+
+  this.get_modal_contents = () => {
+    const instance = this
+
+    return class ModalContents extends React.Component {
+      constructor (props) {
+        super(props)
+
+        this.state = { contentIsLoaded: true, isInitialPage: true }
+      }
+
+      render () {
+        if (this.state.isInitialPage) {
+          const active_img = document.querySelector('img.active')
+
+          return React.createElement(
+            'div',
+            {
+              style: {
+                padding: '1rem',
+                backgroundColor: '#fff',
+                color: '#777'
+              }
+            },
+            [
+              React.createElement(
+                'div',
+                {
+                  style: {
+                    height: '30rem',
+                    width: '30rem',
+                    backgroundImage: `url('${active_img.src}')`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center'
+                  }
+                }
+              ),
+              React.createElement(
+                'div',
+                {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }
+                },
+                [
+                  React.createElement(
+                    instance.get_button_component(),
+                    {
+                      displayText: 'close',
+                      handleClick: () => this.props.toggleModal()
+                    }
+                  ),
+                  React.createElement(
+                    instance.get_button_component(),
+                    {
+                      displayText: 'Surprise me!',
+                      handleClick: () => {}
+                    }
+                  )
+                ]
+              )
+            ]
+          )
+        }
+      }
+    }
+  }
+
 }
 
 Widget = config => new Lib(config)
