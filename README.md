@@ -21,7 +21,7 @@ $ npm run start
 
 ### [`EasySize/fe_test_task`](https://github.com/EasySize) configuration
 
-1. Clone repo, install dependencies and start the server
+1. In separate ternimal tab/window clone project repo, install dependencies and start the server
 
     ```bash
     # clone repo
