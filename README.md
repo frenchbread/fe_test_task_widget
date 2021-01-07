@@ -1,4 +1,4 @@
-# `fe test task widget`
+# fe test task widget
 
 > External widget component for [`EasySize/fe_test_task`](https://github.com/EasySize/fe_test_task).
 
@@ -23,37 +23,39 @@ $ npm run start
 
 1. Clone repo, install dependencies and start the server
 
-```bash
-# clone repo
-$ git clone https://github.com/EasySize/fe_test_task.git && cd fe_test_task
+    ```bash
+    # clone repo
+    $ git clone https://github.com/EasySize/fe_test_task.git && cd fe_test_task
 
-# install dependencies
-$ yarn
-# - or -
-$ npm install
+    # install dependencies
+    $ yarn
+    # - or -
+    $ npm install
 
-# start the server
-$ yarn run serve
-# - or -
-$ npm run serve
-```
+    # start the server
+    $ yarn run serve
+    # - or -
+    $ npm run serve
+    ```
 
 2. Add the following widget configuration to `script.js` file (or modify if it already exists)
 
-```js
-let configuration = {
-  attributes: ['red', 'blue', 'black'],
-  placeholder: '.product-color',
-  placeholder_text: 'Surprise me with the color'
-}
+    ```js
+    // ...
 
-let widget = new Widget(configuration)
-setTimeout(widget.start, 2000)
-```
+    let configuration = {
+      attributes: ['red', 'blue', 'black'],
+      placeholder: '.product-color',
+      placeholder_text: 'Surprise me with the color'
+    }
+
+    let widget = new Widget(configuration)
+    setTimeout(widget.start, 2000)
+    ```
 
 ### Testing
 
-While [`EasySize/fe_test_task`](https://github.com/EasySize) server is up and running open `http://127.0.0.1:3333` in your browser.
+While [`EasySize/fe_test_task`](https://github.com/EasySize) server is up and running open [`http://127.0.0.1:3333`](`http://127.0.0.1:3333`) in your browser.
 
 After loading, a button below "color selection" section should appear. Click it and follow steps in opened modal window.
 
