@@ -16,14 +16,16 @@ const Lib = function (config) {
   this.start = async () => {
     console.log('- widget attached')
 
-    await this.load_reactjs()
+    this.load_reactjs()
+      .then(() => {
+        console.log('- react & react dom loaded')
 
-    console.log('- react & react dom loaded')
-
-    ReactDOM.render(
-      React.createElement(this.get_app_component()),
-      document.getElementById('react_container')
-    )
+        ReactDOM.render(
+          React.createElement(this.get_app_component()),
+          document.getElementById('react_container')
+        )
+      })
+      .catch(err => console.error('- failed to load reactjs scripts'))
   }
 
   this.load_reactjs = async () => {
@@ -317,11 +319,11 @@ const Lib = function (config) {
                   }
                 },
                 React.createElement(
-                  'button',
+                  instance.get_button_component(),
                   {
-                    onClick: () => this.selectAttribute()
-                  },
-                  'Select me!'
+                    handleClick: () => this.selectAttribute(),
+                    displayText: 'Select me!'
+                  }
                 )
               )
             ]
