@@ -10,9 +10,17 @@ jQuery.load_script = url => new Promise((resolve, reject) => {
   })
 })
 
+/**
+ * Lib Class Constructor
+ * Rendres a button with modal using ReactJs
+ * @param  {Object} config Config object
+ */
 const Lib = function (config) {
   this.config = config || {}
 
+  /**
+   * Starts widget, loades nesessary dependencies & renders components
+   */
   this.start = async () => {
     console.log('- widget attached')
 
@@ -20,6 +28,7 @@ const Lib = function (config) {
       .then(() => {
         console.log('- react & react dom loaded')
 
+        // if loaded render react app
         ReactDOM.render(
           React.createElement(this.get_app_component()),
           document.getElementById('react_container')
@@ -28,6 +37,9 @@ const Lib = function (config) {
       .catch(err => console.error('- failed to load reactjs scripts'))
   }
 
+  /**
+   * Attaches placeholder for react components & loads reactjs libs from CDN
+   */
   this.load_reactjs = async () => {
     const react_container = document.createElement('div')
     const placeholder_elem = document.querySelector(this.config.placeholder)
@@ -44,6 +56,10 @@ const Lib = function (config) {
     return
   }
 
+  /**
+   * Ininializes App component
+   * @return {React.Component} App component
+   */
   this.get_app_component = () => {
     const instance = this
 
@@ -87,6 +103,12 @@ const Lib = function (config) {
     }
   }
 
+  /**
+   * Ininializes Button component
+   * @prop {function} handleClick
+   * @prop {String}   displayText
+   * @return {React.Component} Button component
+   */
   this.get_button_component = () => {
     return class Button extends React.Component {
       constructor (props) {
@@ -105,6 +127,10 @@ const Lib = function (config) {
     }
   }
 
+  /**
+   * Ininializes Modal container
+   * @return {React.Component} Modal component
+   */
   this.get_modal_component = () => {
     const instance = this
 
@@ -142,6 +168,10 @@ const Lib = function (config) {
     }
   }
 
+  /**
+   * Renders Modal contents
+   * @return {React.Component} Modal components
+   */
   this.get_modal_contents = () => {
     const instance = this
 
@@ -157,8 +187,6 @@ const Lib = function (config) {
 
         setTimeout(() => {
           this.setState({ ...this.state, stage: 2, chosenAttr: instance.get_random_attribute() })
-
-          console.log(this.state)
         }, 2500)
       }
 
@@ -333,12 +361,14 @@ const Lib = function (config) {
     }
   }
 
+  /**
+   * Finds random attribute
+   * @return {String} Attribute
+   */
   this.get_random_attribute = () => {
     const attributes = this.config.attributes
 
     const random_index = Math.round(Math.random() * attributes.length - 1)
-
-    console.log(random_index, attributes[random_index])
 
     return attributes[random_index]
   }
