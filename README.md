@@ -21,7 +21,7 @@ $ npm run start
 
 ### [`EasySize/fe_test_task`](https://github.com/EasySize) configuration
 
-1. In separate ternimal tab/window clone project repo, install dependencies and start the server
+1. In separate ternimal tab/window clone project repo, install dependencies.
 
     ```bash
     # clone repo
@@ -31,11 +31,6 @@ $ npm run start
     $ yarn
     # - or -
     $ npm install
-
-    # start the server
-    $ yarn run serve
-    # - or -
-    $ npm run serve
     ```
 
 2. Add the following widget configuration to `script.js` file (or modify if it already exists)
@@ -51,6 +46,15 @@ $ npm run start
 
     let widget = new Widget(configuration)
     setTimeout(widget.start, 2000)
+    ```
+    
+3. Start the server
+
+    ```bash
+    # start the server
+    $ yarn run serve
+    # - or -
+    $ npm run serve
     ```
 
 ### Testing
