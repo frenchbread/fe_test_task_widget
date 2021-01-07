@@ -19,7 +19,7 @@ $ yarn run start
 $ npm run start
 ```
 
-### [`EasySize/fe_test_task`](https://github.com/EasySize) configuration
+### [EasySize/fe_test_task](https://github.com/EasySize) configuration
 
 1. In separate ternimal tab/window clone project repo, install dependencies.
 
@@ -44,10 +44,10 @@ $ npm run start
       placeholder_text: 'Surprise me with the color'
     }
 
-    let widget = new Widget(configuration)
+    let widget = Widget(configuration)
     setTimeout(widget.start, 2000)
     ```
-    
+
 3. Start the server
 
     ```bash
@@ -59,7 +59,7 @@ $ npm run start
 
 ### Testing
 
-While [`EasySize/fe_test_task`](https://github.com/EasySize) server is up and running open [`http://127.0.0.1:3333`](`http://127.0.0.1:3333`) in your browser.
+While [`EasySize/fe_test_task`](https://github.com/EasySize) server is up and running open [`http://127.0.0.1:3333`](http://127.0.0.1:3333) in your browser.
 
 After loading, a button below "color selection" section should appear. Click it and follow steps in opened modal window.
 
